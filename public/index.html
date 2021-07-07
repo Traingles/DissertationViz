@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+        integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+        crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Viz</title>
+</head>
+
+<body>
+    <div id="cover" class="covering-panel">
+        <!-- prompt div for user input -->
+        <!-- <div id="randomGraphPrompt" class="popupWindow">
+            <button id="exitPromptButton" class="helpbutton exitPopupButton">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <p>Please enter a number of vertices and a ratio of edges:</p>
+
+            <label class="container randomPromptInput">
+                Number of vertices:
+                <input id="vertex_number" type="text" class="text_number_input">
+            </label>
+
+            <label class="container randomPromptInput">
+                Ratio of edges:
+                <input id="edges_ratio" type="text" class="text_number_input">
+            </label>
+
+            <button id="randomPromptSubmit">Submit</button>
+        </div> -->
+
+        <!-- help window, holds videos of how to use the application -->
+        <div id="help" class="popupWindow">
+            <h1 id="topText" class="topText">Adding a Vertex or Edge</h1>
+            <!-- popup buttons, exit, step back and forward -->
+            <button id="exitHelpButton" class="helpbutton exitPopupButton">
+                <i class="fas fa-times"></i>
+            </button>
+            <button id="backButton" class="helpbutton" onclick="changeVideo(-1)">
+                <i id="backIcon" class="fas fa-chevron-left"></i>
+            </button>
+            <button id="forButton" class="helpbutton" onclick="changeVideo(1)">
+                <i id="forwardIcon" class="fas fa-chevron-right"></i>
+            </button>
+            <!-- video of what to do -->
+            <video id="video" class="video" autoplay muted loop>
+                <source id="videoSrc" src="video/Add.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- tutorial window, opens on everyone's first time opening -->
+        <div id="tutorial" class="popupWindow">
+            <h1 id="topText" class="topText">Welcome to Viz!</h1>
+            
+            <div class="inner_text">
+                <p>Viz is web application designed to let you create flexible graph representations and visualise algorithms on them!</p>
+                <p>When creating a graph with Viz you can:</p>
+                <ul>
+                    <li>Add vertices</li>
+                    <li>Add edges between vertices</li>
+                    <li>Delete edges and vertices</li>
+                    <li>Move vertices</li>
+                </ul>
+            </div>
+            
+            <button id="exitTutorialButton" class="helpbutton exitPopupButton"><i class="fas fa-times"></i></button>
+        </div>
+
+        <!-- <div id="weight_entry_prompt" class="popupWindow prompt">
+            <label class="container randomPromptInput">
+                Weight:
+                <input id="edge_weight" type="text" class="text_number_input">
+            </label>
+        </div> -->
+    </div>
+
+    <div id="top" class="topbar">
+        <div id="start-buttons" class="start-buttons">
+            <button title="Add" id="add_btn" class="button control active">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button title="Delete" id="del_btn" class="button control">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button title="Move" id="mve_btn" class="button control">
+                <i class="fas fa-arrows-alt"></i>
+            </button>
+            <button title="Clear" id="clr_btn" class="button control">
+                <i class="fas fa-trash"></i>
+            </button>
+            <button title="Undo" id="undo_btn" class="button control">
+                <i id="undo_icon" class="fas fa-undo"></i>
+            </button>
+            <button title="Redo" id="redo_btn" class="button control">
+                <i id="redo_icon" class="fas fa-redo"></i>
+            </button>
+            <button title="Randomise" id="random_btn" class="button control">
+                <i class="fas fa-random"></i>
+            </button>
+        </div>
+
+        <div class="center">
+            <button title="Help" id="help_btn" class="button control">
+                <i class="fas fa-question"></i>
+            </button>
+        </div>
+
+        <div id="end-buttons" class="end-buttons">
+            <div class="dropdown">
+                <div class="dropdown__select">
+                    <span class="dropdown__selected">Algorithm</span>
+                    <i class="fa fa-caret-down dropdown__caret"></i>
+                </div>
+                <ul class="dropdown__list">
+                    <li class="dropdown__item">
+                        <span id="dijkstra" class="dropdown__text">Dijkstra</span>
+                    </li>
+                    <li class="dropdown__item">
+                        <span id="dfs" class="dropdown__text">Depth-First</span>
+                    </li>
+                    <li class="dropdown__item">
+                        <span id="bfs" class="dropdown__text">Breadth-First</span>
+                    </li>
+                </ul>
+            </div>
+
+            <button title="Step Backwards" id="step_back_btn" class="button">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button title="Play" id="play_btn" class="button">
+                <i id="play_button_icon" class="fas fa-play"></i>
+            </button>
+            <button title="Step Forwards" id="step_for_btn" class="button">
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="main">
+        <div id="sidebar" class="sidebar">
+            <!-- TODO: add things
+                    - speed slider
+            -->
+
+            <p class="section_header">Graph Settings</p>
+
+            <label class="container">
+                <input id="graph_weight" type="checkbox" class="control">
+                <span class="checkmark"></span>
+                Weighted
+            </label>
+
+            <label class="container">
+                <input id="graph_directed" type="checkbox" class="control">
+                <span class="checkmark"></span>
+                Directed
+            </label>
+
+            <p class="section_header">Animation Settings</p>
+
+            <!-- <label class="container">
+                Speed:
+                <input id="play_speed" type="text" class="text_number_input">ms
+            </label> -->
+            
+            <label id="slider_label" class="container">
+                Play Speed:
+            </label>
+            <input type="range" min="100" max="2000" value="1000" class="container" id="speed_slider" onchange="updateSliderText()">
+
+            <label class="container">
+                Starting Vertex:
+                <input id="start_vertex" type="text" class="text_number_input">
+            </label>
+
+            <label class="container">
+                Ending Vertex:
+                <input id="end_vertex" type="text" class="text_number_input">
+            </label>
+
+            <p class="section_header">Random Graph Settings</p>
+
+            <label class="container">
+                No. of vertices:
+                <input id="vertex_number" type="text" class="text_number_input">
+            </label>
+
+            <label class="container">
+                Edges ratio:
+                <input id="edges_ratio" type="text" class="text_number_input">
+            </label>
+        </div>
+
+        <canvas id="canvas"></canvas>
+
+        <button id="open_btn" class="open_btn" onclick="openNav()">
+            <i class="fas fa-cog"></i>
+        </button>
+
+        <div class="pseudocode">
+            <h1>Algorithm</h1>
+            <div id="pseudocode_text" class="lines">
+                <div class="line">
+                    You have not yet selected an algorithm.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bottom" class="topbar bottombar"></div>
+
+    <!-- CDN imports -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/cc82d3563a.js" crossorigin="anonymous"></script>
+
+    <!-- toastr settings -->
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "2000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+
+    <!-- custom canvas js -->
+    <script src="js/keyboardShortcuts.js"></script>
+    <script src="js/slidingEdge.js"></script>
+    <script src="js/edge.js"></script>
+    <script src="js/vertex.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/helpers.js"></script>
+    <script src="js/pseudocode.js"></script>
+    <script src="js/canvasListeners.js"></script>
+    <script src="js/buttonListeners.js"></script>
+    <script src="js/animationStepFunctions.js"></script>
+
+    <!-- firebase -->
+    <script src="/__/firebase/8.3.1/firebase-app.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+</body>
+
+</html>

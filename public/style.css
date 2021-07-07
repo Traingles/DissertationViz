@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.section_header {
+    margin-top: 50px;
+    margin-left: 15px;
+    width: 160px;
+    opacity: 60%;
+    border-bottom: 1px solid black;
+}
+.section_header:first-child {
+    margin-top: 15px;
+}
+
+.slider {
+    
+}
+
+/* offsets the toast prompts from the top of the screen */
+.toast {
+    top: 50px;
+}
+
+.popupWindow {
+    width: 900px;
+    height: 600px;
+    display: none;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    /* width: 1100px;
+    height: 800px; */
+    z-index: 4;
+    background-color: #DDDDDD;
+
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.4);
+}
+
+.prompt {
+    width: 100px;
+    height: 50px;
+}
+
+#randomGraphPrompt {
+    width: 500px;
+    height: 200px;
+}
+
+.helpbutton {
+    top: 50%;
+    position: absolute;
+    outline: none;
+    font-size: 20px;
+    background-color: #DDD;
+    border: none;
+    color: #222;
+    cursor: pointer;
+}
+
+#backButton {
+    left: 2%;
+}
+
+#forButton {
+    right: 2%;
+}
+
+.exitPopupButton {
+    top: 2%;
+    right: 2%;
+}
+
+.covering-panel {
+    display: none;
+    background: rgba(0, 0, 0, 0.6);
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    z-index: 30;
+}
+
+.video {
+    height: 70%;
+    top: 15%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    /* width: 1000px; */
+
+    border: 1px solid rgb(173, 173, 173);
+}
+
+.topText {
+    width: 80%;
+    margin-top: 5%;
+    margin-left: 10%;
+}
+
+.inner_text {
+    margin-top: 5%;
+    margin-left: 10%;
+    width: 80%;
+}
+.inner_text ul {
+    line-height: 2em;
+    list-style-type: '- ';
+    margin-left: 25px;
+    
+}
+
+.topbar {
+    background-color: #222222;
+    width: 100vw;
+    height: 40px;
+    position: relative;
+}
+
+.bottombar {
+    display: none;
+    z-index: 1;
+    position: fixed;
+    bottom: 0;
+}
+
+.start-buttons {
+    margin-left: 40px;
+    font-size: 0%;
+    float: left;
+}
+
+.end-buttons {
+    margin-right: 40px;
+    font-size: 0%;
+    float: right;
+}
+
+.center {
+    position: absolute;
+    font-size: 0%;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.button {
+    outline: none;
+    font-size: 16px;
+    background-color: #222222;
+    border: none;
+    color: white;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+}
+
+.button:hover {
+    background-color: #111111;
+}
+
+.active {
+    height: 38px;
+    border-top: 2px solid white;
+}
+
+
+/*
+    sidebar
+*/
+.sidebar {
+    display: flex;
+    flex-direction: column;
+
+    width: 0;
+    /* 0 width - change this with JavaScript */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Stay on top */
+    top: 40px;
+
+    bottom: 0px;
+
+    background-color: #DDDDDD;
+    overflow-x: hidden;
+    /* Disable horizontal scroll */
+    transition: 0.5s;
+    /* 0.5 second transition effect to slide in the sidebar */
+}
+
+.open_btn {
+    outline: none;
+    font-size: 15px;
+    background-color: #DDDDDD;
+    border: none;
+    color: #222222;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+    border-radius: 0px 8px 8px 0px;
+}
+
+
+.canvas-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#canvas {
+    position: fixed;
+    /* Stay in place */
+    background-color: #FFF;
+    top: 40px;
+    width: 100%;
+    height: 100%;
+}
+
+.open_btn {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    transition: margin-left .5s;
+    /* If you want a transition effect */
+}
+
+.pseudocode {
+    width: 550px;
+    position: fixed;
+    z-index: 1;
+    top: 40px;
+    bottom: 0px;
+    right: 0;
+    padding: 30px;
+    background-color: #DDDDDD;
+    transition: 0.5s;
+    /* 0.5 second transition effect to slide in the sidebar */
+}
+
+.pseudocode h1 {
+    margin-bottom: 15px;
+}
+
+.line:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.line:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.line {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: white;
+}
+
+
+.container {
+    margin-top: 15px;
+    margin-left: 15px;
+    width: 170px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #222;
+    display: block;
+    transition: 0.3s;
+}
+
+.randomPromptInput {
+    width: 100%;
+}
+
+
+.text_number_input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid rgb(173, 173, 173);
+}
+
+/*
+    dropdown
+*/
+.dropdown {
+    position: relative;
+    display: inline-block;
+    color: white;
+    font-size: 15px;
+}
+
+.dropdown__list {
+    z-index: 3;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: none;
+}
+
+.dropdown:hover .dropdown__list {
+    display: block;
+}
+
+.dropdown__select,
+.dropdown__item {
+    width: 160px;
+    padding: 20px;
+    height: 40px;
+    background-color: #222;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.dropdown__item {
+    transition: background-color 0.2s linear;
+}
+
+.dropdown__item:first-child {
+    position: relative;
+}
+
+.dropdown__item:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+.dropdown__select:hover,
+.dropdown__item:hover {
+    background-color: #111;
+}
+
+
+
+
+@media only screen and (max-width: 1280px) {
+    .popupWindow {
+        width: 800px;
+        height: 560px;
+    }
+
+    .pseudocode {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .topText {
+        margin-top: 2.5%;
+    }
+
+    .popupWindow {
+        font-size: 12px;
+        width: 600px;
+        height: 420px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .topText {
+        font-size: 20px;
+    }
+
+    .popupWindow {
+        width: 360px;
+        height: 280px;
+    }
+
+    #randomGraphPrompt {
+        width: 300px;
+        height: 200px;
+    }
+}
